@@ -1,0 +1,27 @@
+# Базовый образ
+FROM node:20.12.2
+
+# Установка рабочей директории
+WORKDIR /app
+
+# Копирование package.json и package-lock.json для кеширования слоев
+COPY app/package.json package.json
+COPY app/package-lock.json package-lock.json
+
+# Установка зависимостей с помощью npm ci
+RUN npm ci
+
+# Копирование остальных файлов приложения
+COPY app/. .
+
+# Открытие порта 8080
+EXPOSE 8080
+
+# Установка переменной окружения NODE_ENV=production
+ENV NODE_ENV=production
+
+# Сборка приложения
+RUN make build
+
+# Команда запуска приложения
+CMD make start
