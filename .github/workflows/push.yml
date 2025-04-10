@@ -3,32 +3,32 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - main 
+      - main # или другая основная ветка вашего проекта
 
 jobs:
   test-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Клонирование
+      # Шаг 1: Клонирование репозитория
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Логин
+      # Шаг 2: Логин в Docker Hub
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
-      # Запуск тестов
+      # Шаг 3: Запуск тестов
       - name: Run tests
         run: make test
 
-      # Сборка
+      # Шаг 4: Сборка production-образа
       - name: Build production image
-        run: docker-compose -f docker-compose.yml build app
+        run: docker compose -f docker-compose.yml build app
 
-      # Публикация
+      # Шаг 5: Публикация образа на Docker Hub
       - name: Push image to Docker Hub
-        run: docker-compose -f docker-compose.yml push app
+        run: docker compose -f docker-compose.yml push app
