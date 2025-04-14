@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main 
+      - my-new-branch
 
 jobs:
   test-and-deploy:
