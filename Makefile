@@ -1,5 +1,14 @@
+# Проверка наличия .env и загрузка переменных из .env.example, если .env отсутствует
+load-env:
+	@if [ ! -f .env ]; then \
+		echo ".env not found, loading variables from .env.example..."; \
+		export $$(cat .env.example | xargs); \
+	else \
+		echo ".env found, loading variables from .env..."; \
+	fi
+
 # Запуск приложения в режиме разработки
-dev:
+dev: load-env
 	make compose-up
 
 # Удаление контейнеров и очистка
@@ -20,7 +29,7 @@ compose-stop:
 	$(DOCKER_COMPOSE) stop
 
 # Запуск тестов через Docker Compose
-test:
+test: load-env
 	make compose-down # Останавливаем предыдущие контейнеры
 	make compose-up -d # Запускаем контейнеры в фоновом режиме
 	$(DOCKER_COMPOSE) run --rm app npm run migrate # Выполняем миграции
@@ -30,5 +39,5 @@ compose-test:
 	$(DOCKER_COMPOSE) -f docker-compose.yml run --rm app npm test -- --dialect=postgres
 
 # CI команда для запуска тестов
-ci:
+ci: load-env
 	make compose-test
