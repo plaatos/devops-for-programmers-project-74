@@ -79,10 +79,6 @@ make test
 
 [![CI/CD Pipeline](https://github.com/plaatos/devops-for-programmers-project-74/actions/workflows/push.yml/badge.svg)](https://github.com/plaatos/devops-for-programmers-project-74/actions/workflows/push.yml)
 
-## Лицензия
-
-Этот проект распространяется под лицензией MIT. Подробности см. в файле [LICENSE](LICENSE).
-
 ---
 
 ### Примечания
