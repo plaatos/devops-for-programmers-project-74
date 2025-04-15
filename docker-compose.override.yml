@@ -10,7 +10,7 @@ services:
     command: make dev
 
   caddy:
-    image: caddy:latest
+    image: caddy:2.9.1-alpine
     ports:
       - "80:80"   # HTTP
       - "443:443" # HTTPS
